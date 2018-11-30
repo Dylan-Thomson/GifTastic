@@ -16,7 +16,19 @@
     <script src="assets/javascript/script.js"></script>
 </head>
 <body>
-    <h1>GifTastic</h1>
-    
+    <div class="container">
+        <h1>GifTastic</h1>
+        <div id="button-container"></div>
+        <form>
+            <div class="form-group">
+                <label for="input-category">Add a new category:</label>
+                <input class="form-control" id="input-category" type="text">
+            </div>
+            <button class="btn btn-primary" id="submit-category">Submit</button>
+            <button class="btn btn-danger" id="clear-gifs">Clear</button>
+        </form>
+        <div id="gif-container"></div>
+
+    </div>
 </body>
 </html>
