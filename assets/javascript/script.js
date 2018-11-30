@@ -10,11 +10,21 @@ $.ajax({
     console.log(response);
     response.data.forEach(function(gif) {
         var img = $("<img>");
-        var stillUrl = gif.images.fixed_height_small_still.url;
-        var animatedUrl = gif.images.fixed_height_small.url;
-        img.attr("src", stillUrl);
+        img.attr("data-still", gif.images.fixed_height_small_still.url);
+        img.attr("data-animate", gif.images.fixed_height_small.url);
+        img.attr("data-state", "still");
+        img.attr("src", img.attr("data-still"));
+        // var stillUrl = gif.images.fixed_height_small_still.url;
+        // var animatedUrl = gif.images.fixed_height_small.url;
         img.on("click", () => {
-            img.attr("src") === stillUrl ? img.attr("src", animatedUrl) : img.attr("src", stillUrl);
+            if(img.attr("data-state") === "still") {
+                img.attr("src", img.attr("data-animate"));
+                img.attr("data-state", "animate");
+            }
+            else {
+                img.attr("src", img.attr("data-still"));
+                img.attr("data-state", "still");
+            }
         });
         $("body").append(img);
     });
