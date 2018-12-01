@@ -10,11 +10,13 @@ function getGIFs(searchTerm) {
 }
 
 function displayGIFs(gifs, searchTerm) {
-    console.log(gifs);
+    // console.log(gifs);
     $("#gif-container").empty();
     gifs.data.forEach(function(gif) {
         displayGIF(gif);
     });
+
+    $("#get-more").removeClass("d-none");
     // var button = $("<button>");
     // button.addClass("btn btn-primary m-3");
     // button.attr("data-offset", 10);
