@@ -6,22 +6,35 @@ class GifTastic {
     }
 
     getGIFs(searchTerm) {
+        this.searchTerm = searchTerm;
+        this.offset = 0;
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchTerm + "&api_key=" + this.key + "&limit=10";
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then((response) => {
             console.log(response);
-            this.displayGIFs(response, searchTerm);
+            $("#gif-container").empty();
+            this.displayGIFs(response);
         });
     }
 
-    displayGIFs(gifs, searchTerm) {
-        $("#gif-container").empty();
+    getMoreGIFs() {
+        this.offset += 10;
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + this.searchTerm + "&api_key=" + this.key + "&limit=10&offset=" + this.offset;
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then((response) => {
+            console.log(response);
+            this.displayGIFs(response);
+        });
+    }
+
+    displayGIFs(gifs) {
         gifs.data.forEach((gif) => {
             this.displayGIF(gif);
         });
-    
         $("#get-more").removeClass("d-none");
     }
 
@@ -87,6 +100,11 @@ $(document).ready(function() {
         event.preventDefault();
         $("#gif-container").empty();
         $("#get-more").addClass("d-none");
+        gifTastic.offset = 0;
+    });
+
+    $("#get-more").on("click", (event) => {
+        gifTastic.getMoreGIFs();
     });
 
     gifTastic.renderButtons();
