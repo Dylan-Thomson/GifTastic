@@ -35,15 +35,18 @@ class GifTastic {
         gifs.data.forEach((gif) => {
             this.displayGIF(gif);
         });
-        $("#get-more").removeClass("d-none");
+        $("#control-button-container").removeClass("d-none");
     }
 
     displayGIF(gif) {
         var img = $("<img>");
-        img.attr("data-still", gif.images.fixed_height_small_still.url);
+        // img.attr("data-still", gif.images.fixed_height_small_still.url);
+        // img.attr("data-animate", gif.images.fixed_height_small.url);
+
         // img.attr("data-still", gif.images.fixed_width_still.url);
-        img.attr("data-animate", gif.images.fixed_height_small.url);
         // img.attr("data-animate", gif.images.fixed_width.url);
+        img.attr("data-still", gif.images.fixed_height_still.url);
+        img.attr("data-animate", gif.images.fixed_height.url);
         img.attr("data-state", "still");
         img.attr("src", img.attr("data-still"));
         img.on("click", () => {
@@ -99,7 +102,7 @@ $(document).ready(function() {
     $("#clear-gifs").on("click", (event) => {
         event.preventDefault();
         $("#gif-container").empty();
-        $("#get-more").addClass("d-none");
+        $("#control-button-container").addClass("d-none");
         gifTastic.offset = 0;
     });
 
