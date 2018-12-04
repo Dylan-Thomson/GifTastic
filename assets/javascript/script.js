@@ -27,7 +27,13 @@ class GifTastic {
 
     getMoreGIFs() {
         this.offset += 10;
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + this.searchTerm + "&api_key=" + this.key + "&limit=10&offset=" + this.offset;
+        var queryURL;
+        if(this.searchTerm === "trending") {
+            queryURL = "https://api.giphy.com/v1/gifs/trending?api_key=" + this.key + "&limit=10&offset=" + this.offset;
+        }
+        else {
+            queryURL = "https://api.giphy.com/v1/gifs/search?q=" + this.searchTerm + "&api_key=" + this.key + "&limit=10&offset=" + this.offset;
+        }
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -165,6 +171,8 @@ class GifTastic {
     }
 
     getTrending() {
+        this.searchTerm = "trending";
+        this.offset = 0;
         var queryURL = "https://api.giphy.com/v1/gifs/trending?api_key=" + this.key + "&limit=10";
         $.ajax({
             url: queryURL,
