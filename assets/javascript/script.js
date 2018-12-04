@@ -192,7 +192,7 @@ $(document).ready(function() {
     $("#submit-category").on("click", (event) => {
         event.preventDefault();
         if($("#input-category").val() !== "") {
-            gifTastic.addCategory($("#input-category").val());
+            gifTastic.addCategory($("#input-category").val().trim());
             $("#input-category").val("");
         }
     });
