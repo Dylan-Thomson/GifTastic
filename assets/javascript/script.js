@@ -3,7 +3,12 @@ class GifTastic {
         this.categories = categories;
         this.key = key;
         this.offset = 0;
-        this.favorites = [];
+        // this.favorites = [];
+
+        this.favorites = JSON.parse(localStorage.getItem("favorites"));
+        if(!Array.isArray(this.favorites)) {
+            this.favorites = [];
+        }
     }
 
     getGIFs(searchTerm) {
@@ -71,7 +76,7 @@ class GifTastic {
 
         if(this.favorites.indexOf(gif.id) >= 0) {
             console.log(this.favorites, "true");
-            favoriteIcon.addClass("fas fa-heart");
+            favoriteIcon.addClass("fas fa-heart pink");
         }
         else {
             console.log(this.favorites, "false");
@@ -80,18 +85,20 @@ class GifTastic {
 
         favoriteIcon.on("click", () => {
             if(this.favorites.indexOf(gif.id) >= 0) {
-                favoriteIcon.removeClass("fas");
+                favoriteIcon.removeClass("fas pink");
                 favoriteIcon.addClass("far");
                 //remove favorite
                 this.favorites.splice(this.favorites.indexOf(gif.id), 1);
                 console.log(this.favorites);
+                localStorage.setItem("favorites", JSON.stringify(this.favorites));
             }
             else {
                 favoriteIcon.removeClass("far");
-                favoriteIcon.addClass("fas");
+                favoriteIcon.addClass("fas pink");
                 //add favorite
                 this.favorites.push(gif.id);
                 console.log(this.favorites);
+                localStorage.setItem("favorites", JSON.stringify(this.favorites));
             }
         });
 
