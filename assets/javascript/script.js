@@ -75,11 +75,11 @@ class GifTastic {
         var favoriteIcon = $("<i>");
 
         if(this.favorites.indexOf(gif.id) >= 0) {
-            console.log(this.favorites, "true");
+            // console.log(this.favorites, "true");
             favoriteIcon.addClass("fas fa-heart pink");
         }
         else {
-            console.log(this.favorites, "false");
+            // console.log(this.favorites, "false");
             favoriteIcon.addClass("far fa-heart");
         }
 
@@ -101,8 +101,19 @@ class GifTastic {
                 localStorage.setItem("favorites", JSON.stringify(this.favorites));
             }
         });
-
         infoDiv.append(favoriteIcon);
+
+
+
+        // var downloadLink = $("<a>");
+        // downloadLink.attr("href", gif.images.original.url);
+        // downloadLink.attr("download", "");
+        // downloadLink.attr("target", "_blank");
+        // var downloadIcon = $("<i>");
+        // downloadIcon.addClass("fas fa-arrow-down")
+        // downloadLink.append(downloadIcon);
+        // infoDiv.append(downloadLink);
+
         div.append(infoDiv);
         div.addClass("d-inline-block m-3 bg-dark text-white border border-dark");
         $("#gif-container").append(div);
