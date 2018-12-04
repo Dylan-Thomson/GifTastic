@@ -163,6 +163,17 @@ class GifTastic {
             this.displayGIF(response.data);
         });
     }
+
+    getTrending() {
+        var queryURL = "https://api.giphy.com/v1/gifs/trending?api_key=" + this.key + "&limit=10";
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then((response) => {
+            console.log(response);
+            this.displayGIFs(response);
+        });
+    }
 }
 
 
@@ -199,6 +210,12 @@ $(document).ready(function() {
         event.preventDefault();
         $("#gif-container").empty();
         gifTastic.getRandom();
+    });
+
+    $("#get-trending").on("click", (event) => {
+        event.preventDefault();
+        $("#gif-container").empty();
+        gifTastic.getTrending();
     });
 
     gifTastic.renderButtons();
