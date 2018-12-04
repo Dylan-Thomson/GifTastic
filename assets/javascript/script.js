@@ -3,6 +3,7 @@ class GifTastic {
         this.categories = categories;
         this.key = key;
         this.offset = 0;
+        this.favorites = [];
     }
 
     getGIFs(searchTerm) {
@@ -60,11 +61,43 @@ class GifTastic {
             }
         });
         var div = $("<div>").append(img);
-        var p = $("<p>");
-        p.text("Rating: " + gif.rating);
-        p.addClass("text-center");
-        div.append(p);
-        div.addClass("d-inline-block m-3");
+        var infoDiv = $("<div>");
+        var rating = $("<div>");
+        rating.text("Rating: " + gif.rating.toUpperCase());
+        infoDiv.addClass("text-center");
+        infoDiv.append(rating);
+
+        var favoriteIcon = $("<i>");
+
+        if(this.favorites.indexOf(gif.id) >= 0) {
+            console.log(this.favorites, "true");
+            favoriteIcon.addClass("fas fa-heart");
+        }
+        else {
+            console.log(this.favorites, "false");
+            favoriteIcon.addClass("far fa-heart");
+        }
+
+        favoriteIcon.on("click", () => {
+            if(this.favorites.indexOf(gif.id) >= 0) {
+                favoriteIcon.removeClass("fas");
+                favoriteIcon.addClass("far");
+                //remove favorite
+                this.favorites.splice(this.favorites.indexOf(gif.id), 1);
+                console.log(this.favorites);
+            }
+            else {
+                favoriteIcon.removeClass("far");
+                favoriteIcon.addClass("fas");
+                //add favorite
+                this.favorites.push(gif.id);
+                console.log(this.favorites);
+            }
+        });
+
+        infoDiv.append(favoriteIcon);
+        div.append(infoDiv);
+        div.addClass("d-inline-block m-3 bg-dark text-white border border-dark");
         $("#gif-container").append(div);
     }
 
@@ -85,6 +118,19 @@ class GifTastic {
     addCategory(category) {
         this.categories.push(category);
         this.renderButtons();
+    }
+
+    getFavorites() {
+        this.favorites.forEach((id) => {
+            var queryURL = "https://api.giphy.com/v1/gifs/" + id + "?api_key=" + this.key;
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then((response) => {
+                console.log(response.data);
+                this.displayGIF(response.data);
+            });
+        });
     }
 }
 
@@ -108,6 +154,12 @@ $(document).ready(function() {
 
     $("#get-more").on("click", (event) => {
         gifTastic.getMoreGIFs();
+    });
+
+    $("#get-favorites").on("click", () => {
+        $("#gif-container").empty();
+        $("#control-button-container").addClass("d-none");
+        gifTastic.getFavorites();
     });
 
     gifTastic.renderButtons();
