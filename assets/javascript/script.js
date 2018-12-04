@@ -184,6 +184,7 @@ class GifTastic {
     }
 }
 
+// TODO: Cache favorites api results, not just search value
 
 $(document).ready(function() {
     var categories = ["cats", "dogs", "cows", "pigs"];
