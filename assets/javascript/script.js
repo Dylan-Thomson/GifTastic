@@ -68,7 +68,9 @@ class GifTastic {
         var div = $("<div>").append(img);
         var infoDiv = $("<div>");
         var rating = $("<div>");
-        rating.text("Rating: " + gif.rating.toUpperCase());
+        if(gif.rating) {
+            rating.text("Rating: " + gif.rating.toUpperCase());
+        }
         infoDiv.addClass("text-center");
         infoDiv.append(rating);
 
@@ -150,6 +152,17 @@ class GifTastic {
             });
         });
     }
+
+    getRandom() {
+        var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=" + this.key;
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then((response) => {
+            console.log(response);
+            this.displayGIF(response.data);
+        });
+    }
 }
 
 
@@ -171,13 +184,21 @@ $(document).ready(function() {
     });
 
     $("#get-more").on("click", (event) => {
+        event.preventDefault();
         gifTastic.getMoreGIFs();
     });
 
-    $("#get-favorites").on("click", () => {
+    $("#get-favorites").on("click", (event) => {
+        event.preventDefault();
         $("#gif-container").empty();
         $("#control-button-container").addClass("d-none");
         gifTastic.getFavorites();
+    });
+    
+    $("#get-random").on("click", (event) => {
+        event.preventDefault();
+        $("#gif-container").empty();
+        gifTastic.getRandom();
     });
 
     gifTastic.renderButtons();
