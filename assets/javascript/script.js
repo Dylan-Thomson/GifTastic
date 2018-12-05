@@ -9,6 +9,11 @@ class GifTastic {
         if(!Array.isArray(this.favorites)) {
             this.favorites = [];
         }
+
+        this.favoriteCache = JSON.parse(localStorage.getItem("favoriteCache"));
+        if(!Array.isArray(this.favoriteCache)) {
+            this.favoriteCache = [];
+        }
     }
 
     // Retrieve 10 GIFS using given search value
@@ -35,7 +40,6 @@ class GifTastic {
 
     // Display each GIF from selection
     displayGIFs(gifs) {
-        // $("#gif-container").empty();
         gifs.data.forEach((gif) => {
             this.displayGIF(gif);
         });
@@ -69,29 +73,32 @@ class GifTastic {
 
         var favoriteIcon = $("<i>");
 
-        if(this.favorites.indexOf(gif.id) >= 0) {
+        if(this.isFavorite(gif)) {
             favoriteIcon.addClass("fas fa-heart pink");
+            console.log(gif);
         }
         else {
             favoriteIcon.addClass("far fa-heart");
         }
 
         favoriteIcon.on("click", () => {
-            if(this.favorites.indexOf(gif.id) >= 0) {
+            if(this.isFavorite(gif)) {
                 favoriteIcon.removeClass("fas pink");
                 favoriteIcon.addClass("far");
-                //remove favorite
-                this.favorites.splice(this.favorites.indexOf(gif.id), 1);
-                console.log(this.favorites);
-                localStorage.setItem("favorites", JSON.stringify(this.favorites));
+
+                // Remove favorite
+                this.favoriteCache.splice(this.favoriteCache.indexOf(gif), 1);
+                console.log(this.favoriteCache);
+                localStorage.setItem("favoriteCache", JSON.stringify(this.favoriteCache));
             }
             else {
                 favoriteIcon.removeClass("far");
                 favoriteIcon.addClass("fas pink");
-                //add favorite
-                this.favorites.push(gif.id);
-                console.log(this.favorites);
-                localStorage.setItem("favorites", JSON.stringify(this.favorites));
+
+                // Add favorite
+                this.favoriteCache.push(gif);
+                console.log(this.favoriteCache);
+                localStorage.setItem("favoriteCache", JSON.stringify(this.favoriteCache));
             }
         });
         infoDiv.append(favoriteIcon);
@@ -131,18 +138,10 @@ class GifTastic {
         this.getData(queryURL);
     }
         
-    // TODO: Cache favorites api results, not just search value
     getFavorites() {
         $("#gif-container").empty();
-        this.favorites.forEach((id) => {
-            var queryURL = "https://api.giphy.com/v1/gifs/" + id + "?api_key=" + this.key;
-            $.ajax({
-                url: queryURL,
-                method: "GET"
-            }).then((response) => {
-                console.log(response.data);
-                this.displayGIF(response.data);
-            });
+        this.favoriteCache.forEach((gif) => {
+            this.displayGIF(gif);
         });
     }
     
@@ -156,6 +155,21 @@ class GifTastic {
             this.displayGIFs(response);
         });    
     }
+
+    isGIFEqual(gifA, gifB) {
+        if(gifA && gifB) {
+            return gifA.id === gifB.id
+        }
+        return false;
+    }
+
+    isFavorite(gif) {
+        for(var i = 0; i < this.favoriteCache.length; i++) {
+            if(this.isGIFEqual(gif, this.favoriteCache[i])) return true;
+        }
+        return false;
+    }
+    
 }
 
 $(document).ready(function() {
