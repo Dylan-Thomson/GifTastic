@@ -73,6 +73,7 @@ class GifTastic {
         infoDiv.append(rating);
 
         var favoriteIcon = $("<i>");
+        favoriteIcon.attr("title", "Favorite");
 
         if(this.isFavorite(gif)) {
             favoriteIcon.addClass("fas fa-heart pink");
@@ -105,6 +106,7 @@ class GifTastic {
         var facebookLink = $("<a>");
         facebookLink.attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + gif.url);
         facebookLink.attr("target", "_blank");
+        facebookLink.attr("title", "Share on Facebook");
         var facebookIcon = $("<i>");
         facebookIcon.addClass("fab fa-facebook");
         facebookLink.append(facebookIcon);
@@ -113,6 +115,7 @@ class GifTastic {
         var twitterLink = $("<a>");
         twitterLink.attr("href", "https://twitter.com/home?status=" + gif.url);
         twitterLink.attr("target", "_blank");
+        twitterLink.attr("title", "Share on Twitter");
         var twitterIcon = $("<i>");
         twitterIcon.addClass("fab fa-twitter-square");
         twitterLink.append(twitterIcon);
