@@ -16,6 +16,7 @@ class GifTastic {
         this.searchTerm = searchTerm;
         this.offset = 0;
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchTerm + "&api_key=" + this.key + "&limit=10";
+        $("#gif-container").empty();
         this.getData(queryURL);
     }
 
@@ -32,8 +33,9 @@ class GifTastic {
         this.getData(queryURL);
     }
 
+    // Display each GIF from selection
     displayGIFs(gifs) {
-        $("#gif-container").empty();
+        // $("#gif-container").empty();
         gifs.data.forEach((gif) => {
             this.displayGIF(gif);
         });
@@ -125,11 +127,13 @@ class GifTastic {
         this.searchTerm = "trending";
         this.offset = 0;
         var queryURL = "https://api.giphy.com/v1/gifs/trending?api_key=" + this.key + "&limit=10";
+        $("#gif-container").empty();
         this.getData(queryURL);
     }
         
     // TODO: Cache favorites api results, not just search value
     getFavorites() {
+        $("#gif-container").empty();
         this.favorites.forEach((id) => {
             var queryURL = "https://api.giphy.com/v1/gifs/" + id + "?api_key=" + this.key;
             $.ajax({
@@ -153,7 +157,6 @@ class GifTastic {
         });    
     }
 }
-
 
 $(document).ready(function() {
     // Initialize gitTastic and render buttons
@@ -196,6 +199,5 @@ $(document).ready(function() {
         event.preventDefault();
         gifTastic.getTrending();
     });
-
 
 });
