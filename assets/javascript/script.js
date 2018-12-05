@@ -40,10 +40,15 @@ class GifTastic {
 
     // Display each GIF from selection
     displayGIFs(gifs) {
-        gifs.data.forEach((gif) => {
-            this.displayGIF(gif);
-        });
-        $("#control-button-container").removeClass("d-none");
+        if(gifs.data.length > 0) {
+            gifs.data.forEach((gif) => {
+                this.displayGIF(gif);
+            });
+            $("#control-button-container").removeClass("d-none");
+        }
+        else { // Tell user we didn't find any GIFs :(
+            this.appendMessage("No GIFs found. Try a different category!");
+        }
     }
 
     displayGIF(gif) {
@@ -88,7 +93,6 @@ class GifTastic {
 
                 // Remove favorite
                 this.favoriteCache.splice(this.favoriteCache.indexOf(gif), 1);
-                console.log(this.favoriteCache);
                 localStorage.setItem("favoriteCache", JSON.stringify(this.favoriteCache));
             }
             else {
@@ -97,7 +101,6 @@ class GifTastic {
 
                 // Add favorite
                 this.favoriteCache.push(gif);
-                console.log(this.favoriteCache);
                 localStorage.setItem("favoriteCache", JSON.stringify(this.favoriteCache));
             }
         });
@@ -116,7 +119,6 @@ class GifTastic {
             button.text(category);
             button.addClass("btn btn-primary m-2");
             button.on("click", () => {
-                // $("#gif-container").empty();
                 this.getGIFs(category);
             });
             $("#button-container").append(button);
@@ -140,9 +142,14 @@ class GifTastic {
         
     getFavorites() {
         $("#gif-container").empty();
-        this.favoriteCache.forEach((gif) => {
-            this.displayGIF(gif);
-        });
+        if(this.favoriteCache.length > 0) {
+            this.favoriteCache.forEach((gif) => {
+                this.displayGIF(gif);
+            });
+        }
+        else { // Tell user there are no favorites
+            this.appendMessage("You haven't added any favorites yet. Click the heart icon on a GIF to favorite it!");
+        }
     }
     
     // Get data from API given query and display
@@ -153,6 +160,8 @@ class GifTastic {
         }).then((response) => {
             console.log(response);
             this.displayGIFs(response);
+        }).fail(() => {
+            this.appendMessage("Failed to connect to GIPHY API");
         });    
     }
 
@@ -168,6 +177,15 @@ class GifTastic {
             if(this.isGIFEqual(gif, this.favoriteCache[i])) return true;
         }
         return false;
+    }
+
+    appendMessage(message) {
+        $("#gif-container").empty();
+        var div = $("<div>");
+        div.addClass("m-4 text-center");
+        div.text(message);
+        $("#gif-container").append(div);
+        $("#control-button-container").addClass("d-none");
     }
     
 }
