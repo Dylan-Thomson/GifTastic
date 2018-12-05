@@ -4,12 +4,6 @@ class GifTastic {
         this.key = key;
         this.offset = 0;
 
-        // Try to get favorites from local storage, initialize to empty array if none found
-        this.favorites = JSON.parse(localStorage.getItem("favorites"));
-        if(!Array.isArray(this.favorites)) {
-            this.favorites = [];
-        }
-
         this.favoriteCache = JSON.parse(localStorage.getItem("favoriteCache"));
         if(!Array.isArray(this.favoriteCache)) {
             this.favoriteCache = [];
@@ -51,6 +45,8 @@ class GifTastic {
         }
     }
 
+    // Display GIF with relevant data and listeners to page
+    // Might refactor this absoulute unit of a method 
     displayGIF(gif) {
         var img = $("<img>");
         img.attr("data-still", gif.images.fixed_height_still.url);
@@ -105,8 +101,25 @@ class GifTastic {
             }
         });
         infoDiv.append(favoriteIcon);
+
+        var facebookLink = $("<a>");
+        facebookLink.attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + gif.url);
+        facebookLink.attr("target", "_blank");
+        var facebookIcon = $("<i>");
+        facebookIcon.addClass("fab fa-facebook");
+        facebookLink.append(facebookIcon);
+        infoDiv.append(facebookLink);
+        
+        var twitterLink = $("<a>");
+        twitterLink.attr("href", "https://twitter.com/home?status=" + gif.url);
+        twitterLink.attr("target", "_blank");
+        var twitterIcon = $("<i>");
+        twitterIcon.addClass("fab fa-twitter-square");
+        twitterLink.append(twitterIcon);
+        infoDiv.append(twitterLink);
+
         div.append(infoDiv);
-        div.addClass("d-inline-block m-3 bg-dark text-white border border-dark");
+        div.addClass("d-inline-block m-3 bg-dark text-white border border-dark gif-div");
         $("#gif-container").append(div);
     }
 
@@ -140,6 +153,7 @@ class GifTastic {
         this.getData(queryURL);
     }
         
+    // Get favorites from cache and display them
     getFavorites() {
         $("#gif-container").empty();
         if(this.favoriteCache.length > 0) {
@@ -165,6 +179,7 @@ class GifTastic {
         });    
     }
 
+    // Check if two GIFs have equal ID
     isGIFEqual(gifA, gifB) {
         if(gifA && gifB) {
             return gifA.id === gifB.id
@@ -172,6 +187,7 @@ class GifTastic {
         return false;
     }
 
+    // Check if GIF is in favorite cache
     isFavorite(gif) {
         for(var i = 0; i < this.favoriteCache.length; i++) {
             if(this.isGIFEqual(gif, this.favoriteCache[i])) return true;
@@ -179,6 +195,7 @@ class GifTastic {
         return false;
     }
 
+    // Append message to gif-container (usually when we don't have any GIFS to display)
     appendMessage(message) {
         $("#gif-container").empty();
         var div = $("<div>");
