@@ -147,10 +147,16 @@ class GifTastic {
         });
     }
     
-    // Add a new category and render all buttons
+    // Add a new category, render all buttons, and get GIFs for category
     addCategory(category) {
-        this.categories.push(category);
-        this.renderButtons();
+        if(this.categories.includes(category)) {
+            this.appendMessage("Category already exists");
+        }
+        else {
+            this.categories.push(category);
+            this.renderButtons();
+            this.getGIFs(category);
+        }
     }
 
     // Get 10 trending GIFS
