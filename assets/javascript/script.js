@@ -128,7 +128,7 @@ class GifTastic {
 
         // Add div to gif-container
         div.append(infoDiv);
-        div.addClass("d-inline-block m-3 bg-dark text-white border border-dark gif-div");
+        div.addClass("d-inline-block m-3 text-white gif-div");
         $("#gif-container").append(div);
     }
 
@@ -139,7 +139,7 @@ class GifTastic {
             var button = $("<button>");
             button.attr("data-value", category);
             button.text(category);
-            button.addClass("btn btn-primary m-1");
+            button.addClass("btn btn-info m-1");
             button.on("click", () => {
                 this.getGIFs(category);
             });
@@ -187,7 +187,7 @@ class GifTastic {
             url: url,
             method: "GET"
         }).then((response) => {
-            // console.log(response);
+            console.log(response);
             this.displayGIFs(response);
         }).fail(() => {
             this.appendMessage("Failed to connect to GIPHY API");
@@ -224,7 +224,7 @@ class GifTastic {
 
 $(document).ready(function() {
     // Initialize gitTastic and render buttons
-    var categories = ["cats", "dogs", "cows", "pigs"];
+    var categories = ["cat", "dog", "hamster", "frog", "cow", "parrot", "otter", "hamster", "goat", "bear", "dolphin"];
     var gifTastic = new GifTastic(categories, "dvcHv6i1zrERIdmKZ2fROgBXIsZTvhAE");
     gifTastic.renderButtons();
 
