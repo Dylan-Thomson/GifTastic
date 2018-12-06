@@ -79,11 +79,11 @@ class GifTastic {
         var favoriteIcon = $("<i>");
         favoriteIcon.attr("title", "Favorite");
         if(this.isFavorite(gif)) {
-            favoriteIcon.addClass("fas fa-heart pink");
+            favoriteIcon.addClass("fas fa-heart pink fa-lg");
             // console.log(gif);
         }
         else {
-            favoriteIcon.addClass("far fa-heart");
+            favoriteIcon.addClass("far fa-heart fa-lg");
         }
 
         favoriteIcon.on("click", () => {
@@ -112,7 +112,7 @@ class GifTastic {
         facebookLink.attr("target", "_blank");
         facebookLink.attr("title", "Share on Facebook");
         var facebookIcon = $("<i>");
-        facebookIcon.addClass("fab fa-facebook");
+        facebookIcon.addClass("fab fa-facebook fa-lg");
         facebookLink.append(facebookIcon);
         infoDiv.append(facebookLink);
         
@@ -122,7 +122,7 @@ class GifTastic {
         twitterLink.attr("target", "_blank");
         twitterLink.attr("title", "Share on Twitter");
         var twitterIcon = $("<i>");
-        twitterIcon.addClass("fab fa-twitter-square");
+        twitterIcon.addClass("fab fa-twitter-square fa-lg");
         twitterLink.append(twitterIcon);
         infoDiv.append(twitterLink);
 
