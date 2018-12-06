@@ -48,6 +48,7 @@ class GifTastic {
     // Display GIF with relevant data and listeners to page
     // Might refactor this absoulute unit of a method 
     displayGIF(gif) {
+        // Build our image and have it animate on click
         var img = $("<img>");
         img.attr("data-still", gif.images.fixed_height_still.url);
         img.attr("data-animate", gif.images.fixed_height.url);
@@ -64,6 +65,8 @@ class GifTastic {
             }
         });
         var div = $("<div>").append(img);
+
+        // Build our info div with rating, and buttons
         var infoDiv = $("<div>");
         var rating = $("<div>");
         if(gif.rating) {
@@ -72,12 +75,12 @@ class GifTastic {
         infoDiv.addClass("text-center");
         infoDiv.append(rating);
 
+        // Add favorite button
         var favoriteIcon = $("<i>");
         favoriteIcon.attr("title", "Favorite");
-
         if(this.isFavorite(gif)) {
             favoriteIcon.addClass("fas fa-heart pink");
-            console.log(gif);
+            // console.log(gif);
         }
         else {
             favoriteIcon.addClass("far fa-heart");
@@ -103,6 +106,7 @@ class GifTastic {
         });
         infoDiv.append(favoriteIcon);
 
+        // Add facebook link
         var facebookLink = $("<a>");
         facebookLink.attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + gif.url);
         facebookLink.attr("target", "_blank");
@@ -112,6 +116,7 @@ class GifTastic {
         facebookLink.append(facebookIcon);
         infoDiv.append(facebookLink);
         
+        // Add twitter link
         var twitterLink = $("<a>");
         twitterLink.attr("href", "https://twitter.com/home?status=" + gif.url);
         twitterLink.attr("target", "_blank");
@@ -121,6 +126,7 @@ class GifTastic {
         twitterLink.append(twitterIcon);
         infoDiv.append(twitterLink);
 
+        // Add div to gif-container
         div.append(infoDiv);
         div.addClass("d-inline-block m-3 bg-dark text-white border border-dark gif-div");
         $("#gif-container").append(div);
@@ -133,7 +139,7 @@ class GifTastic {
             var button = $("<button>");
             button.attr("data-value", category);
             button.text(category);
-            button.addClass("btn btn-primary m-2");
+            button.addClass("btn btn-primary m-1");
             button.on("click", () => {
                 this.getGIFs(category);
             });
@@ -175,7 +181,7 @@ class GifTastic {
             url: url,
             method: "GET"
         }).then((response) => {
-            console.log(response);
+            // console.log(response);
             this.displayGIFs(response);
         }).fail(() => {
             this.appendMessage("Failed to connect to GIPHY API");
