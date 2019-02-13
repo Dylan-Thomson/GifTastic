@@ -1,6 +1,6 @@
 # GifTastic
 
-(Live site)[https://dylan-thomson.github.io/GifTastic/]
+[Live site](https://dylan-thomson.github.io/GifTastic/)
 
 GifTastic interacts with the GIPHY API to search for and display GIFs. 
 
