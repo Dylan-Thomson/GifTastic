@@ -1,0 +1,31 @@
+{
+  "name": "giftastic",
+  "version": "1.0.0",
+  "description": "GifTastic interacts with the GIPHY API to search for and display GIFs.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dylan-Thomson/GifTastic.git"
+  },
+  "author": "Dylan Thomson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dylan-Thomson/GifTastic/issues"
+  },
+  "homepage": "https://github.com/Dylan-Thomson/GifTastic#readme",
+  "dependencies": {
+    "babel-eslint": "^10.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0"
+  }
+}
