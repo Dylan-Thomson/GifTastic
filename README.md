@@ -1,4 +1,7 @@
 # GifTastic
+
+[Live site](https://dylan-thomson.github.io/GifTastic/)
+
 GifTastic interacts with the GIPHY API to search for and display GIFs. 
 
 Users can click on a category button to get 10 GIFs from that category. These GIFs are loaded as still images, but animate when clicked. The user can click "get more" to load 10 more GIFs from that category. In addition, new categories can be added using a text input field.
